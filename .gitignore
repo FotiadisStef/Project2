@@ -1,5 +1,4 @@
-10MB.wav
-5MB.wav
-2MB.wav
-1MB.wav
+bin/*
+samples/*
 
+!.gitkeep

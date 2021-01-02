@@ -33,20 +33,26 @@ int main()
 
         case 'I':
             if (i != 1)
+            {
                 fprintf(stderr, "Error! ''RIFF'' not found\n");
-            return 1;
+                return 1;
+            }
             break;
 
         case 'F':
             if (i != 2 && i != 3)
+            {
                 fprintf(stderr, "Error! ''RIFF'' not found\n");
-            return 1;
+                return 1;
+            }
             break;
 
         default:
+        {
             fprintf(stderr, "Error! ''RIFF'' not found\n");
             return 1;
-            break;
+        }
+        break;
         }
     }
 
@@ -75,7 +81,6 @@ int main()
         {
             ch = ch << 24;
             num += ch;
-            fprintf(stderr, "size of file: %u\n", num);
         }
     }
 
@@ -87,27 +92,42 @@ int main()
         {
         case 'W':
             if (i != 0)
+            {
                 fprintf(stderr, "Error! ''WAVE'' not found\n");
-            return 1;
+                return 1;
+            }
+            break;
 
         case 'A':
             if (i != 1)
+            {
                 fprintf(stderr, "Error! ''WAVE'' not found\n");
-            return 1;
+                return 1;
+            }
+            break;
 
         case 'V':
             if (i != 2)
+            {
                 fprintf(stderr, "Error! ''WAVE'' not found\n");
-            return 1;
+                return 1;
+            }
+            break;
 
         case 'E':
             if (i != 3)
+            {
                 fprintf(stderr, "Error! ''WAVE not found\n");
-            return 1;
+                return 1;
+            }
+            break;
 
         default:
+        {
             fprintf(stderr, "Error! ''WAVE'' not found\n");
             return 1;
+        }
+        break;
         }
     }
 
@@ -119,27 +139,42 @@ int main()
         {
         case 'f':
             if (i != 0)
+            {
                 fprintf(stderr, "Error! ''fmt '' not found\n");
-            return 1;
+                return 1;
+            }
+            break;
 
         case 'm':
             if (i != 1)
+            {
                 fprintf(stderr, "Error! ''fmt '' not found\n");
-            return 1;
+                return 1;
+            }
+            break;
 
         case 't':
             if (i != 2)
+            {
                 fprintf(stderr, "Error! ''fmt '' not found\n");
-            return 1;
+                return 1;
+            }
+            break;
 
         case ' ':
             if (i != 3)
+            {
                 fprintf(stderr, "Error! ''fmt '' not found\n");
-            return 1;
+                return 1;
+            }
+            break;
 
         default:
+        {
             fprintf(stderr, "Error! ''fmt '' not found\n");
             return 1;
+        }
+        break;
         }
     }
 
@@ -168,13 +203,6 @@ int main()
         {
             ch = ch << 24;
             format += ch;
-            fprintf(stderr, "size of format chunk: %u\n", format);
-        }
-
-        if (format != 16)
-        {
-            fprintf(stderr, "Error! size of format chunk should be 16\n");
-            return 1;
         }
     }
 
@@ -185,19 +213,12 @@ int main()
         if (i == 0)
         {
             wave_format = ch;
-            fprintf(stderr, "WAVE type format: %u\n", wave_format);
         }
 
         if (i == 1)
         {
             ch = ch << 8;
             wave_format += ch;
-        }
-
-        if (wave_format != 1)
-        {
-            fprintf(stderr, "Error! WAVE type format should be 1\n");
-            return 1;
         }
     }
 
@@ -208,7 +229,6 @@ int main()
         if (i == 0)
         {
             stereo = ch;
-            fprintf(stderr, "mono/stereo : %u\n", stereo);
         }
 
         // if (i = 1)
@@ -216,12 +236,6 @@ int main()
         //     ch = ch << 8;
         //     // stereo += ch;
         // }
-
-        if (stereo != 1 && stereo != 2)
-        {
-            fprintf(stderr, "Error! mono/stereo should be 1 or 2\n");
-            return 1;
-        }
     }
 
     for (int i = 0; i < 4; i++) // check the next 4 bytes for sample rate
@@ -249,7 +263,6 @@ int main()
         {
             ch = ch << 24;
             sample_rate += ch;
-            fprintf(stderr, "sample rate: %u\n", sample_rate);
         }
     }
 
@@ -278,14 +291,7 @@ int main()
         {
             ch = ch << 24;
             by_sec += ch;
-            fprintf(stderr, "bytes/sec: %u\n", by_sec);
         }
-    }
-
-    if (by_sec != sample_rate * blck_align)
-    {
-        fprintf(stderr, "Error! bytes/second should be sample rate * block alignment\n");
-        return 1;
     }
 
     for (int i = 0; i < 2; i++) // check the next 2 bytes for block allignment
@@ -301,14 +307,7 @@ int main()
         {
             ch = ch << 8;
             blck_align += ch;
-            fprintf(stderr, "block alignment: %u\n", blck_align);
         }
-    }
-
-    if (blck_align != (bits_sample / 8) * stereo)
-    {
-        fprintf(stderr, "Error! block alignment should be (bits per sample / 8) * mono/stereo");
-        return 1;
     }
 
     for (int i = 0; i < 2; i++) // check the next 2 bytes for bits per sample
@@ -324,14 +323,7 @@ int main()
         {
             ch = ch << 8;
             bits_sample += ch;
-            fprintf(stderr, "bits/sample: %u\n", bits_sample);
         }
-    }
-
-    if (bits_sample != 8 && bits_sample != 16)
-    {
-        fprintf(stderr, "Error! bits/sample should be 8 or 16");
-        return 1;
     }
 
     for (int i = 0; i < 4; i++) // check the next 4 bytes for "data"
@@ -342,22 +334,34 @@ int main()
         {
         case 'd':
             if (i != 0)
+            {
                 fprintf(stderr, "Error! ''data'' not found\n");
-            return 1;
+                return 1;
+            }
+            break;
 
         case 'a':
             if (i != 1 && i != 3)
+            {
                 fprintf(stderr, "Error! ''data'' not found\n");
-            return 1;
+                return 1;
+            }
+            break;
 
         case 't':
             if (i != 2)
+            {
                 fprintf(stderr, "Error! ''data'' not found\n");
-            return 1;
+                return 1;
+            }
+            break;
 
         default:
+        {
             fprintf(stderr, "Error! ''data'' not found\n");
             return 1;
+        }
+        break;
         }
     }
 
@@ -386,9 +390,58 @@ int main()
         {
             ch = ch << 24;
             size_of_data += ch;
-            fprintf(stderr, "size of data chunk: %u\n", size_of_data);
         }
     }
+
+    fprintf(stderr, "size of file: %u\n", num);
+
+    fprintf(stderr, "size of format chunk: %u\n", format);
+    if (format != 16)
+    {
+        fprintf(stderr, "Error! size of format chunk should be 16\n");
+        return 1;
+    }
+
+    fprintf(stderr, "WAVE type format: %u\n", wave_format);
+    if (wave_format != 1)
+    {
+        fprintf(stderr, "Error! WAVE type format should be 1\n");
+        return 1;
+    }
+
+    fprintf(stderr, "mono/stereo : %u\n", stereo);
+    if (stereo != 1 && stereo != 2)
+    {
+        fprintf(stderr, "Error! mono/stereo should be 1 or 2\n");
+        return 1;
+    }
+
+    fprintf(stderr, "sample rate: %u\n", sample_rate);
+
+    fprintf(stderr, "bytes/sec: %u\n", by_sec);
+    if (by_sec != sample_rate * blck_align)
+    {
+        printf("sample rate = %d, block alignment = %d, bytes/second = %d\n", sample_rate, blck_align, by_sec);
+        fprintf(stderr, "Error! bytes/second should be sample rate * block alignment\n");
+        return 1;
+    }
+
+    fprintf(stderr, "block alignment: %u\n", blck_align);
+
+    fprintf(stderr, "bits/sample: %u\n", bits_sample);
+    if (bits_sample != 8 && bits_sample != 16)
+    {
+        fprintf(stderr, "Error! bits/sample should be 8 or 16");
+        return 1;
+    }
+
+    if (blck_align != (bits_sample / 8) * stereo)
+    {
+        fprintf(stderr, "Error! block alignment should be (bits per sample / 8) * mono/stereo");
+        return 1;
+    }
+
+    fprintf(stderr, "size of data chunk: %u\n", size_of_data);
 
     return 0;
 }
